@@ -1,0 +1,46 @@
+{
+  "name": "@hypermid/crosschain-widget",
+  "version": "1.0.0",
+  "description": "Embeddable cross-chain swap widget for HyperMid — drop into any website with a single script tag or npm import",
+  "type": "module",
+  "main": "dist/widget.js",
+  "module": "dist/widget.esm.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/widget.esm.js",
+      "require": "./dist/widget.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && tsc --emitDeclarationOnly --declaration --outDir dist",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hypermid/sdk": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "vite": "^5.4.0"
+  },
+  "keywords": [
+    "hypermid",
+    "cross-chain",
+    "swap",
+    "widget",
+    "bridge",
+    "defi",
+    "embeddable"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hypermid/crosschain-widget.git"
+  }
+}

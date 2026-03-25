@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HyperMid Cross-Chain Widget - Demo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0f1017;
+      color: #e0e0e8;
+      min-height: 100vh;
+    }
+
+    .demo-layout {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      padding: 40px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .demo-header {
+      text-align: center;
+      padding: 40px 24px 0;
+    }
+
+    .demo-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .demo-header h1 span {
+      color: #7B3FE4;
+    }
+
+    .demo-header p {
+      font-size: 15px;
+      color: #8888a0;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ─── Widget Container ─────────────────────────────────── */
+
+    .widget-container {
+      flex-shrink: 0;
+    }
+
+    /* ─── Config Panel ─────────────────────────────────────── */
+
+    .config-panel {
+      background: #1a1b23;
+      border: 1px solid #33344a;
+      border-radius: 16px;
+      padding: 24px;
+      width: 320px;
+      max-width: 100%;
+    }
+
+    .config-panel h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+
+    .config-group {
+      margin-bottom: 16px;
+    }
+
+    .config-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: #8888a0;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .config-group select,
+    .config-group input {
+      width: 100%;
+      padding: 10px 12px;
+      background: #252633;
+      border: 1px solid #33344a;
+      border-radius: 10px;
+      color: #e0e0e8;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .config-group select:focus,
+    .config-group input:focus {
+      border-color: #7B3FE4;
+    }
+
+    .config-group select option {
+      background: #252633;
+      color: #e0e0e8;
+    }
+
+    .config-group .color-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .config-group .color-row input[type="color"] {
+      width: 40px;
+      height: 38px;
+      padding: 2px;
+      border-radius: 8px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .config-group .color-row input[type="text"] {
+      flex: 1;
+    }
+
+    /* ─── Embed Code ───────────────────────────────────────── */
+
+    .embed-section {
+      margin-top: 20px;
+    }
+
+    .embed-section h4 {
+      font-size: 13px;
+      font-weight: 500;
+      color: #8888a0;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .embed-code {
+      background: #12131a;
+      border: 1px solid #33344a;
+      border-radius: 10px;
+      padding: 12px;
+      font-family: "SF Mono", "Fira Code", monospace;
+      font-size: 11px;
+      color: #a1a1b5;
+      white-space: pre-wrap;
+      word-break: break-all;
+      max-height: 160px;
+      overflow-y: auto;
+      line-height: 1.5;
+    }
+
+    .copy-btn {
+      width: 100%;
+      margin-top: 8px;
+      padding: 10px;
+      background: #252633;
+      border: 1px solid #33344a;
+      border-radius: 10px;
+      color: #e0e0e8;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+
+    .copy-btn:hover {
+      background: #7B3FE4;
+      border-color: #7B3FE4;
+      color: #fff;
+    }
+
+    .copy-btn.copied {
+      background: #22c55e;
+      border-color: #22c55e;
+      color: #fff;
+    }
+
+    @media (max-width: 740px) {
+      .demo-layout {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .config-panel {
+        width: 100%;
+        max-width: 420px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-header">
+    <h1><span>HyperMid</span> Cross-Chain Widget</h1>
+    <p>Embeddable swap widget for 90+ chains. Drop into any website with a single script tag.</p>
+  </div>
+
+  <div class="demo-layout">
+    <!-- Widget -->
+    <div class="widget-container">
+      <div id="hypermid-widget"></div>
+    </div>
+
+    <!-- Config Panel -->
+    <div class="config-panel">
+      <h3>Configuration</h3>
+
+      <div class="config-group">
+        <label>Theme</label>
+        <select id="cfg-theme">
+          <option value="dark" selected>Dark</option>
+          <option value="light">Light</option>
+        </select>
+      </div>
+
+      <div class="config-group">
+        <label>Accent Color</label>
+        <div class="color-row">
+          <input type="color" id="cfg-color-picker" value="#7B3FE4" />
+          <input type="text" id="cfg-color-text" value="#7B3FE4" />
+        </div>
+      </div>
+
+      <div class="config-group">
+        <label>From Chain</label>
+        <select id="cfg-from-chain">
+          <option value="1" selected>Ethereum</option>
+          <option value="10">Optimism</option>
+          <option value="56">BNB Chain</option>
+          <option value="137">Polygon</option>
+          <option value="8453">Base</option>
+          <option value="42161">Arbitrum</option>
+          <option value="43114">Avalanche</option>
+        </select>
+      </div>
+
+      <div class="config-group">
+        <label>To Chain</label>
+        <select id="cfg-to-chain">
+          <option value="1">Ethereum</option>
+          <option value="10">Optimism</option>
+          <option value="56">BNB Chain</option>
+          <option value="137">Polygon</option>
+          <option value="8453">Base</option>
+          <option value="42161" selected>Arbitrum</option>
+          <option value="43114">Avalanche</option>
+        </select>
+      </div>
+
+      <div class="config-group">
+        <label>Width</label>
+        <input type="text" id="cfg-width" value="420px" />
+      </div>
+
+      <div class="config-group">
+        <label>Border Radius</label>
+        <input type="text" id="cfg-radius" value="16px" />
+      </div>
+
+      <!-- Embed Code -->
+      <div class="embed-section">
+        <h4>Embed Code</h4>
+        <div class="embed-code" id="embed-code"></div>
+        <button class="copy-btn" id="copy-btn">Copy Embed Code</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { HyperMidWidget } from "./src/index.ts";
+
+    let currentWidget = null;
+
+    function getConfig() {
+      return {
+        containerId: "hypermid-widget",
+        theme: document.getElementById("cfg-theme").value,
+        accentColor: document.getElementById("cfg-color-text").value,
+        defaultFromChain: parseInt(document.getElementById("cfg-from-chain").value, 10),
+        defaultToChain: parseInt(document.getElementById("cfg-to-chain").value, 10),
+        width: document.getElementById("cfg-width").value,
+        borderRadius: document.getElementById("cfg-radius").value,
+        onQuote: (quote) => console.log("[HyperMidWidget] Quote:", quote),
+        onExecute: (result) => console.log("[HyperMidWidget] Execute:", result),
+        onError: (error) => console.log("[HyperMidWidget] Error:", error),
+      };
+    }
+
+    function renderWidget() {
+      if (currentWidget) {
+        currentWidget.destroy();
+      }
+      document.getElementById("hypermid-widget").innerHTML = "";
+      const config = getConfig();
+      currentWidget = HyperMidWidget.init(config);
+      updateEmbedCode(config);
+    }
+
+    function updateEmbedCode(config) {
+      const code = `<div id="hypermid-widget"></div>
+<script src="https://cdn.hypermid.io/widget.js"><\/script>
+<script>
+  HyperMidWidget.init({
+    containerId: "hypermid-widget",
+    theme: "${config.theme}",
+    accentColor: "${config.accentColor}",
+    defaultFromChain: ${config.defaultFromChain},
+    defaultToChain: ${config.defaultToChain},
+    width: "${config.width}",
+    borderRadius: "${config.borderRadius}",
+  });
+<\/script>`;
+      document.getElementById("embed-code").textContent = code;
+    }
+
+    // Initial render
+    renderWidget();
+
+    // Config change listeners
+    ["cfg-theme", "cfg-from-chain", "cfg-to-chain", "cfg-width", "cfg-radius"].forEach((id) => {
+      document.getElementById(id).addEventListener("change", renderWidget);
+    });
+
+    // Color sync
+    document.getElementById("cfg-color-picker").addEventListener("input", (e) => {
+      document.getElementById("cfg-color-text").value = e.target.value;
+      renderWidget();
+    });
+    document.getElementById("cfg-color-text").addEventListener("change", (e) => {
+      document.getElementById("cfg-color-picker").value = e.target.value;
+      renderWidget();
+    });
+
+    // Copy embed code
+    document.getElementById("copy-btn").addEventListener("click", () => {
+      const code = document.getElementById("embed-code").textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.getElementById("copy-btn");
+        btn.textContent = "Copied!";
+        btn.classList.add("copied");
+        setTimeout(() => {
+          btn.textContent = "Copy Embed Code";
+          btn.classList.remove("copied");
+        }, 2000);
+      });
+    });
+  </script>
+
+</body>
+</html>
