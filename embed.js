@@ -20,7 +20,7 @@
 (function () {
   "use strict";
 
-  var APP_BASE = "https://hypermid.io";
+  var APP_BASE = "https://www.hypermid.io";
 
   /**
    * Build the iframe URL with query params from config
@@ -36,11 +36,26 @@
     if (config.defaultToToken) params.push("toToken=" + encodeURIComponent(config.defaultToToken));
     if (config.defaultFromAmount) params.push("fromAmount=" + encodeURIComponent(config.defaultFromAmount));
     if (config.accentColor) params.push("accent=" + encodeURIComponent(config.accentColor.replace("#", "")));
+    if (config.accentHoverColor) params.push("accentHover=" + encodeURIComponent(config.accentHoverColor.replace("#", "")));
     if (config.hideOnramp) params.push("hideOnramp=1");
     if (config.hidePoweredBy) params.push("hidePoweredBy=1");
     if (config.lockFromChain) params.push("lockFromChain=1");
     if (config.lockToChain) params.push("lockToChain=1");
     if (config.walletAddress) params.push("wallet=" + encodeURIComponent(config.walletAddress));
+    if (config.mode) params.push("mode=" + encodeURIComponent(config.mode));
+
+    // Theming overrides
+    if (config.bgPrimary) params.push("bgPrimary=" + encodeURIComponent(config.bgPrimary.replace("#", "")));
+    if (config.bgCard) params.push("bgCard=" + encodeURIComponent(config.bgCard.replace("#", "")));
+    if (config.bgCardInner) params.push("bgCardInner=" + encodeURIComponent(config.bgCardInner.replace("#", "")));
+    if (config.bgInput) params.push("bgInput=" + encodeURIComponent(config.bgInput.replace("#", "")));
+    if (config.textPrimary) params.push("textPrimary=" + encodeURIComponent(config.textPrimary.replace("#", "")));
+    if (config.textSecondary) params.push("textSecondary=" + encodeURIComponent(config.textSecondary.replace("#", "")));
+    if (config.borderColor) params.push("borderColor=" + encodeURIComponent(config.borderColor));
+    if (config.borderRadius) params.push("borderRadius=" + config.borderRadius);
+    if (config.buttonRadius) params.push("buttonRadius=" + config.buttonRadius);
+    if (config.fontFamily) params.push("fontFamily=" + encodeURIComponent(config.fontFamily));
+    if (config.shadow) params.push("shadow=" + encodeURIComponent(config.shadow));
 
     params.push("embed=1");
 
@@ -85,7 +100,7 @@
   function setupMessageListener(config) {
     window.addEventListener("message", function (event) {
       // Only accept messages from our app
-      if (event.origin !== APP_BASE) return;
+      if (event.origin !== APP_BASE && event.origin !== "https://hypermid.io") return;
 
       var data = event.data;
       if (!data || !data.type || data.type.indexOf("hypermid:") !== 0) return;
