@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hypermid Widget Demo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0F171F;
+      color: #E2E8F0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, #1F40DD, #44E1AA);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p { color: #8A9AB4; margin-bottom: 32px; }
+    .widget-container { margin-bottom: 40px; }
+
+    .config-panel {
+      background: #151D28;
+      border: 1px solid rgba(68, 225, 170, 0.1);
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 500px;
+      width: 100%;
+    }
+    .config-panel h3 { font-size: 16px; margin-bottom: 16px; color: #44E1AA; }
+    .config-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .config-row label { font-size: 14px; color: #8A9AB4; }
+    .config-row select, .config-row input {
+      background: #0F171F;
+      border: 1px solid rgba(68, 225, 170, 0.2);
+      color: #E2E8F0;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .embed-code {
+      margin-top: 32px;
+      max-width: 600px;
+      width: 100%;
+    }
+    .embed-code h3 { font-size: 16px; margin-bottom: 12px; color: #44E1AA; }
+    .embed-code pre {
+      background: #151D28;
+      border: 1px solid rgba(68, 225, 170, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      overflow-x: auto;
+      font-size: 13px;
+      color: #8A9AB4;
+      line-height: 1.6;
+    }
+    .embed-code code { color: #44E1AA; }
+    .copy-btn {
+      margin-top: 8px;
+      background: linear-gradient(90deg, #1F40DD, #44E1AA);
+      color: #0F171F;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .copy-btn:hover { opacity: 0.9; }
+
+    /* Auto-init demo */
+    .auto-demo {
+      margin-top: 40px;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+    .auto-demo h3 { font-size: 16px; margin-bottom: 12px; color: #44E1AA; }
+    .auto-demo p { font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>Hypermid Widget</h1>
+  <p>Embed cross-chain swaps in your website with one script tag</p>
+
+  <!-- Widget -->
+  <div class="widget-container">
+    <div id="hypermid-widget"></div>
+  </div>
+
+  <!-- Config Panel -->
+  <div class="config-panel">
+    <h3>Configuration</h3>
+    <div class="config-row">
+      <label>Theme</label>
+      <select id="cfg-theme" onchange="updateWidget()">
+        <option value="dark" selected>Dark</option>
+        <option value="light">Light</option>
+      </select>
+    </div>
+    <div class="config-row">
+      <label>From Chain</label>
+      <select id="cfg-from" onchange="updateWidget()">
+        <option value="1" selected>Ethereum</option>
+        <option value="42161">Arbitrum</option>
+        <option value="137">Polygon</option>
+        <option value="8453">Base</option>
+        <option value="10">Optimism</option>
+        <option value="56">BSC</option>
+      </select>
+    </div>
+    <div class="config-row">
+      <label>To Chain</label>
+      <select id="cfg-to" onchange="updateWidget()">
+        <option value="1">Ethereum</option>
+        <option value="42161" selected>Arbitrum</option>
+        <option value="137">Polygon</option>
+        <option value="8453">Base</option>
+        <option value="10">Optimism</option>
+        <option value="56">BSC</option>
+      </select>
+    </div>
+    <div class="config-row">
+      <label>Width</label>
+      <input type="text" id="cfg-width" value="420px" onchange="updateWidget()">
+    </div>
+    <div class="config-row">
+      <label>Height</label>
+      <input type="text" id="cfg-height" value="600px" onchange="updateWidget()">
+    </div>
+    <div class="config-row">
+      <label>Border Radius</label>
+      <input type="text" id="cfg-radius" value="16px" onchange="updateWidget()">
+    </div>
+  </div>
+
+  <!-- Embed Code -->
+  <div class="embed-code">
+    <h3>Embed Code</h3>
+    <pre id="embed-output"></pre>
+    <button class="copy-btn" onclick="copyEmbed()">Copy Embed Code</button>
+  </div>
+
+  <!-- Load the embed script -->
+  <script src="embed.js"></script>
+  <script>
+    function getConfig() {
+      return {
+        containerId: "hypermid-widget",
+        partnerId: "demo-partner",
+        theme: document.getElementById("cfg-theme").value,
+        defaultFromChain: parseInt(document.getElementById("cfg-from").value),
+        defaultToChain: parseInt(document.getElementById("cfg-to").value),
+        width: document.getElementById("cfg-width").value,
+        height: document.getElementById("cfg-height").value,
+        borderRadius: document.getElementById("cfg-radius").value,
+        onQuote: function(q) { console.log("Quote:", q); },
+        onExecute: function(e) { console.log("Execute:", e); },
+        onError: function(e) { console.log("Error:", e); },
+        onReady: function() { console.log("Widget ready"); },
+      };
+    }
+
+    function updateWidget() {
+      HypermidWidget.init(getConfig());
+      updateEmbedCode();
+    }
+
+    function updateEmbedCode() {
+      var cfg = getConfig();
+      var code = '<div id="hypermid-widget"></div>\n' +
+        '<script src="https://widget.hypermid.io/v1/embed.js"><\/script>\n' +
+        '<script>\n' +
+        '  HypermidWidget.init({\n' +
+        '    containerId: "hypermid-widget",\n' +
+        '    partnerId: "' + cfg.partnerId + '",\n' +
+        '    theme: "' + cfg.theme + '",\n' +
+        '    defaultFromChain: ' + cfg.defaultFromChain + ',\n' +
+        '    defaultToChain: ' + cfg.defaultToChain + ',\n' +
+        '  });\n' +
+        '<\/script>';
+      document.getElementById("embed-output").textContent = code;
+    }
+
+    function copyEmbed() {
+      var text = document.getElementById("embed-output").textContent;
+      navigator.clipboard.writeText(text).then(function() {
+        var btn = document.querySelector(".copy-btn");
+        btn.textContent = "Copied!";
+        setTimeout(function() { btn.textContent = "Copy Embed Code"; }, 2000);
+      });
+    }
+
+    // Initialize
+    HypermidWidget.init(getConfig());
+    updateEmbedCode();
+  </script>
+</body>
+</html>
