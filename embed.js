@@ -37,6 +37,8 @@
     if (config.defaultFromAmount) params.push("fromAmount=" + encodeURIComponent(config.defaultFromAmount));
     if (config.accentColor) params.push("accent=" + encodeURIComponent(config.accentColor.replace("#", "")));
     if (config.accentHoverColor) params.push("accentHover=" + encodeURIComponent(config.accentHoverColor.replace("#", "")));
+    if (config.secondaryColor) params.push("secondary=" + encodeURIComponent(config.secondaryColor.replace("#", "")));
+    if (config.errorColor) params.push("error=" + encodeURIComponent(config.errorColor.replace("#", "")));
     if (config.hideOnramp) params.push("hideOnramp=1");
     if (config.hidePoweredBy) params.push("hidePoweredBy=1");
     if (config.lockFromChain) params.push("lockFromChain=1");
