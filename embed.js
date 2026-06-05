@@ -20,7 +20,7 @@
 (function () {
   "use strict";
 
-  var APP_BASE = "https://www.hypermid.io";
+  var APP_BASE = "https://app.hypermid.io";
 
   /**
    * Build the iframe URL with query params from config
