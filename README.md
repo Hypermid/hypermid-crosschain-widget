@@ -1,6 +1,6 @@
 # @hypermid/crosschain-widget
 
-Embeddable cross-chain swap widget for HyperMid. Drop into any website with a single `<script>` tag or npm import. Supports 90+ chains via LI.FI and Near Intents.
+Embeddable cross-chain swap widget for Hypermid. Drop into any website with a single `<script>` tag or npm import. Supports 90+ chains via LI.FI and Near Intents.
 
 ## Quick Start
 
@@ -10,7 +10,7 @@ Embeddable cross-chain swap widget for HyperMid. Drop into any website with a si
 <div id="hypermid-widget"></div>
 <script src="https://cdn.hypermid.io/widget.js"></script>
 <script>
-  HyperMidWidget.init({
+  HypermidWidget.init({
     containerId: "hypermid-widget",
     theme: "dark",
     defaultFromChain: 1,       // Ethereum
@@ -27,9 +27,9 @@ npm install @hypermid/crosschain-widget
 ```
 
 ```typescript
-import { HyperMidWidget } from "@hypermid/crosschain-widget";
+import { HypermidWidget } from "@hypermid/crosschain-widget";
 
-const widget = new HyperMidWidget({
+const widget = new HypermidWidget({
   containerId: "swap-widget",
   apiKey: "your-api-key",  // optional
   theme: "dark",
@@ -57,12 +57,12 @@ widget.destroy();
 | `width` | `string` | `"420px"` | Widget width (any CSS value) |
 | `borderRadius` | `string` | `"16px"` | Widget border radius |
 | `hideOnramp` | `boolean` | `false` | Hide "Buy with Card" button |
-| `hidePoweredBy` | `boolean` | `false` | Hide "Powered by HyperMid" footer |
+| `hidePoweredBy` | `boolean` | `false` | Hide "Powered by Hypermid" footer |
 
 ## Callbacks
 
 ```typescript
-HyperMidWidget.init({
+HypermidWidget.init({
   containerId: "hypermid-widget",
 
   // Called when a quote is received
@@ -93,10 +93,10 @@ The widget ships with built-in dark and light themes. Set the `theme` option to 
 
 ```typescript
 // Dark theme (default)
-HyperMidWidget.init({ containerId: "widget", theme: "dark" });
+HypermidWidget.init({ containerId: "widget", theme: "dark" });
 
 // Light theme
-HyperMidWidget.init({ containerId: "widget", theme: "light" });
+HypermidWidget.init({ containerId: "widget", theme: "light" });
 ```
 
 ### Custom Accent Color
@@ -104,7 +104,7 @@ HyperMidWidget.init({ containerId: "widget", theme: "light" });
 Override the accent color to match your brand:
 
 ```typescript
-HyperMidWidget.init({
+HypermidWidget.init({
   containerId: "widget",
   accentColor: "#FF6B00",  // your brand color
 });

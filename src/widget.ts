@@ -7,10 +7,10 @@ import { buildCss, DARK_THEME, LIGHT_THEME, type ThemeVars } from "./styles";
 import { formatAmount, parseAmount, formatUsd, formatTime, formatFeeBps, debounce } from "./utils";
 
 /**
- * HyperMid Cross-Chain Swap Widget.
+ * Hypermid Cross-Chain Swap Widget.
  * Renders inside a Shadow DOM for complete style isolation.
  */
-export class HyperMidSwapWidget {
+export class HypermidSwapWidget {
   private config: WidgetConfig;
   private store: WidgetStore;
   private api: WidgetApi;
@@ -69,7 +69,7 @@ export class HyperMidSwapWidget {
   mount(): void {
     const hostEl = document.getElementById(this.config.containerId);
     if (!hostEl) {
-      console.error(`[HyperMidWidget] Container #${this.config.containerId} not found`);
+      console.error(`[HypermidWidget] Container #${this.config.containerId} not found`);
       return;
     }
 
@@ -159,7 +159,7 @@ export class HyperMidSwapWidget {
       <div class="hm-header">
         <div class="hm-header-title">
           <span class="hm-header-icon">\u26A1</span>
-          HyperMid Swap
+          Hypermid Swap
         </div>
       </div>
 
@@ -246,7 +246,7 @@ export class HyperMidSwapWidget {
       <!-- Footer -->
       ${!this.config.hidePoweredBy ? `
         <div class="hm-footer">
-          Powered by <a href="https://hypermid.io" target="_blank" rel="noopener">HyperMid</a>
+          Powered by <a href="https://hypermid.io" target="_blank" rel="noopener">Hypermid</a>
         </div>
       ` : ""}
     `;
@@ -523,7 +523,7 @@ export class HyperMidSwapWidget {
   }
 
   private handleBuyWithCard(): void {
-    // Open HyperMid on-ramp in a new tab
+    // Open Hypermid on-ramp in a new tab
     window.open("https://hypermid.io/onramp", "_blank", "noopener");
   }
 

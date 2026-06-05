@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HyperMid Cross-Chain Widget - Demo</title>
+  <title>Hypermid Cross-Chain Widget - Demo</title>
   <style>
     * {
       box-sizing: border-box;
@@ -206,7 +206,7 @@
 <body>
 
   <div class="demo-header">
-    <h1><span>HyperMid</span> Cross-Chain Widget</h1>
+    <h1><span>Hypermid</span> Cross-Chain Widget</h1>
     <p>Embeddable swap widget for 90+ chains. Drop into any website with a single script tag.</p>
   </div>
 
@@ -282,7 +282,7 @@
   </div>
 
   <script type="module">
-    import { HyperMidWidget } from "./src/index.ts";
+    import { HypermidWidget } from "./src/index.ts";
 
     let currentWidget = null;
 
@@ -295,9 +295,9 @@
         defaultToChain: parseInt(document.getElementById("cfg-to-chain").value, 10),
         width: document.getElementById("cfg-width").value,
         borderRadius: document.getElementById("cfg-radius").value,
-        onQuote: (quote) => console.log("[HyperMidWidget] Quote:", quote),
-        onExecute: (result) => console.log("[HyperMidWidget] Execute:", result),
-        onError: (error) => console.log("[HyperMidWidget] Error:", error),
+        onQuote: (quote) => console.log("[HypermidWidget] Quote:", quote),
+        onExecute: (result) => console.log("[HypermidWidget] Execute:", result),
+        onError: (error) => console.log("[HypermidWidget] Error:", error),
       };
     }
 
@@ -307,7 +307,7 @@
       }
       document.getElementById("hypermid-widget").innerHTML = "";
       const config = getConfig();
-      currentWidget = HyperMidWidget.init(config);
+      currentWidget = HypermidWidget.init(config);
       updateEmbedCode(config);
     }
 
@@ -315,7 +315,7 @@
       const code = `<div id="hypermid-widget"></div>
 <script src="https://cdn.hypermid.io/widget.js"><\/script>
 <script>
-  HyperMidWidget.init({
+  HypermidWidget.init({
     containerId: "hypermid-widget",
     theme: "${config.theme}",
     accentColor: "${config.accentColor}",

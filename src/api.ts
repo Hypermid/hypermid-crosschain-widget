@@ -1,4 +1,4 @@
-import type { QuoteResponse, ExecuteResponse, StatusResponse, Token, Chain, HyperMidError } from "./types";
+import type { QuoteResponse, ExecuteResponse, StatusResponse, Token, Chain, HypermidError } from "./types";
 
 const DEFAULT_BASE_URL = "https://api.hypermid.io";
 const DEFAULT_TIMEOUT = 30_000;
@@ -10,7 +10,7 @@ interface ApiResponse<T = unknown> {
 }
 
 /**
- * Lightweight HyperMid API wrapper for the widget.
+ * Lightweight Hypermid API wrapper for the widget.
  * Avoids importing the full SDK to keep bundle size minimal.
  */
 export class WidgetApi {
@@ -60,7 +60,7 @@ export class WidgetApi {
       const json: ApiResponse<T> = await res.json();
 
       if (json.error) {
-        const err: HyperMidError = {
+        const err: HypermidError = {
           code: json.error.code,
           message: json.error.message,
           status: res.status,
@@ -75,12 +75,12 @@ export class WidgetApi {
         throw err; // Re-throw API errors
       }
       if (err instanceof DOMException && err.name === "AbortError") {
-        throw { code: "TIMEOUT", message: `Request timed out after ${this.timeout}ms` } as HyperMidError;
+        throw { code: "TIMEOUT", message: `Request timed out after ${this.timeout}ms` } as HypermidError;
       }
       throw {
         code: "NETWORK_ERROR",
         message: err instanceof Error ? err.message : "Network request failed",
-      } as HyperMidError;
+      } as HypermidError;
     } finally {
       clearTimeout(timer);
     }

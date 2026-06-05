@@ -1,36 +1,36 @@
 /**
  * @hypermid/crosschain-widget
  *
- * Embeddable cross-chain swap widget for HyperMid.
+ * Embeddable cross-chain swap widget for Hypermid.
  * Drop into any website with a single <script> tag or npm import.
  *
  * Usage (script tag):
  *   <div id="hypermid-widget"></div>
  *   <script src="https://cdn.hypermid.io/widget.js"></script>
  *   <script>
- *     HyperMidWidget.init({ containerId: "hypermid-widget", theme: "dark" });
+ *     HypermidWidget.init({ containerId: "hypermid-widget", theme: "dark" });
  *   </script>
  *
  * Usage (npm):
- *   import { HyperMidWidget } from "@hypermid/crosschain-widget";
- *   const widget = new HyperMidWidget({ containerId: "swap-widget" });
+ *   import { HypermidWidget } from "@hypermid/crosschain-widget";
+ *   const widget = new HypermidWidget({ containerId: "swap-widget" });
  *   widget.mount();
  */
 
-import { HyperMidSwapWidget } from "./widget";
+import { HypermidSwapWidget } from "./widget";
 import type { WidgetConfig } from "./types";
 
 export type { WidgetConfig } from "./types";
-export type { QuoteResponse, ExecuteResponse, StatusResponse, HyperMidError } from "./types";
+export type { QuoteResponse, ExecuteResponse, StatusResponse, HypermidError } from "./types";
 
 /**
- * Main entry point for the HyperMid cross-chain swap widget.
+ * Main entry point for the Hypermid cross-chain swap widget.
  */
-export class HyperMidWidget {
-  private widget: HyperMidSwapWidget;
+export class HypermidWidget {
+  private widget: HypermidSwapWidget;
 
   constructor(config: WidgetConfig) {
-    this.widget = new HyperMidSwapWidget(config);
+    this.widget = new HypermidSwapWidget(config);
   }
 
   /** Mount the widget into the DOM */
@@ -47,8 +47,8 @@ export class HyperMidWidget {
    * Static factory for script-tag usage.
    * Creates, mounts, and returns a widget instance.
    */
-  static init(config: WidgetConfig): HyperMidWidget {
-    const instance = new HyperMidWidget(config);
+  static init(config: WidgetConfig): HypermidWidget {
+    const instance = new HypermidWidget(config);
     instance.mount();
     return instance;
   }
@@ -56,5 +56,5 @@ export class HyperMidWidget {
 
 // Auto-expose to window for UMD/script-tag usage
 if (typeof window !== "undefined") {
-  (window as unknown as Record<string, unknown>).HyperMidWidget = HyperMidWidget;
+  (window as unknown as Record<string, unknown>).HypermidWidget = HypermidWidget;
 }

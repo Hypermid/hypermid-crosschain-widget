@@ -73,7 +73,7 @@ export interface Chain {
   [key: string]: unknown;
 }
 
-export interface HyperMidError {
+export interface HypermidError {
   code: string;
   message: string;
   status?: number;
@@ -107,7 +107,7 @@ export interface WidgetConfig {
   borderRadius?: string;
   /** Hide the "Buy with Card" on-ramp button */
   hideOnramp?: boolean;
-  /** Hide the "Powered by HyperMid" footer */
+  /** Hide the "Powered by Hypermid" footer */
   hidePoweredBy?: boolean;
 
   // ─── Callbacks ─────────────────────────────────────────────────────
@@ -118,7 +118,7 @@ export interface WidgetConfig {
   /** Called when swap status changes */
   onStatusChange?: (status: StatusResponse) => void;
   /** Called on any error */
-  onError?: (error: HyperMidError) => void;
+  onError?: (error: HypermidError) => void;
 }
 
 // ─── Internal Widget State ───────────────────────────────────────────────

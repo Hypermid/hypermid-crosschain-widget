@@ -1,7 +1,7 @@
 {
   "name": "@hypermid/crosschain-widget",
   "version": "1.0.0",
-  "description": "Embeddable cross-chain swap widget for HyperMid — drop into any website with a single script tag or npm import",
+  "description": "Embeddable cross-chain swap widget for Hypermid — drop into any website with a single script tag or npm import",
   "type": "module",
   "main": "dist/widget.js",
   "module": "dist/widget.esm.js",
