@@ -10,7 +10,7 @@
  *   <script>
  *     HypermidWidget.init({
  *       containerId: "hypermid-widget",
- *       partnerId: "your-partner-id",
+ *       apiKey: "your-api-key",   // optional — attributes swaps to your account
  *       theme: "dark",
  *       defaultFromChain: 1,
  *       defaultToChain: 42161,
@@ -28,6 +28,11 @@
   function buildUrl(config) {
     var params = [];
 
+    // Partner attribution. apiKey is the supported path — sent as X-API-Key on
+    // the quote/swap calls so the swap is attributed to the partner. Optional:
+    // a keyless widget works fully (organic / "open" mode), just unattributed.
+    // partnerId is kept for backward compatibility with earlier embeds.
+    if (config.apiKey) params.push("apiKey=" + encodeURIComponent(config.apiKey));
     if (config.partnerId) params.push("partnerId=" + encodeURIComponent(config.partnerId));
     if (config.theme) params.push("theme=" + encodeURIComponent(config.theme));
     if (config.defaultFromChain) params.push("fromChain=" + config.defaultFromChain);
@@ -149,7 +154,10 @@
      *
      * @param {Object} config
      * @param {string} config.containerId - DOM element ID to mount into
-     * @param {string} [config.partnerId] - Your partner ID for fee tracking
+     * @param {string} [config.apiKey] - Your Hypermid API key. Optional — when
+     *   set, swaps are attributed to your partner account (fees accrue to you).
+     *   Omit for a keyless / organic widget.
+     * @param {string} [config.partnerId] - Deprecated alias for attribution; prefer apiKey
      * @param {string} [config.theme] - "dark" | "light" (default: "dark")
      * @param {number} [config.defaultFromChain] - Default source chain ID
      * @param {number} [config.defaultToChain] - Default destination chain ID
@@ -264,6 +272,7 @@
     if (autoInit) {
       HypermidWidget.init({
         containerId: autoInit.id || "hypermid-widget",
+        apiKey: autoInit.getAttribute("data-api-key") || undefined,
         partnerId: autoInit.getAttribute("data-partner-id") || undefined,
         theme: autoInit.getAttribute("data-theme") || "dark",
         defaultFromChain: parseInt(autoInit.getAttribute("data-from-chain")) || undefined,
