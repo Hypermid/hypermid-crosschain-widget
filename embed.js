@@ -83,7 +83,7 @@
 
     // Styling
     var width = config.width || "420px";
-    var height = config.height || "600px";
+    var height = config.height || "640px";
     var borderRadius = config.borderRadius || "16px";
 
     iframe.style.cssText = [
@@ -128,12 +128,15 @@
           if (config.onError) config.onError(data.payload);
           break;
         case "resize":
-          // Auto-resize iframe height if app requests it. Floor at 360px so a
-          // transient tiny/zero height can never collapse the embed — defense
-          // in depth alongside the widget's own floor.
+          // Auto-resize: only ever GROW the iframe, never shrink below the
+          // initial/default height. A swap card is always ~605px, so we never
+          // want a transient small measurement to collapse the embed — the
+          // resize message can only make room for taller content. This removes
+          // the mount-vs-resize race entirely.
           var iframe = document.getElementById("hypermid-widget-iframe");
           if (iframe && data.payload && data.payload.height) {
-            iframe.style.height = Math.max(data.payload.height, 360) + "px";
+            var floor = parseInt(config.height, 10) || 640;
+            iframe.style.height = Math.max(data.payload.height, floor) + "px";
           }
           break;
         case "ready":
