@@ -128,10 +128,12 @@
           if (config.onError) config.onError(data.payload);
           break;
         case "resize":
-          // Auto-resize iframe height if app requests it
+          // Auto-resize iframe height if app requests it. Floor at 360px so a
+          // transient tiny/zero height can never collapse the embed — defense
+          // in depth alongside the widget's own floor.
           var iframe = document.getElementById("hypermid-widget-iframe");
           if (iframe && data.payload && data.payload.height) {
-            iframe.style.height = data.payload.height + "px";
+            iframe.style.height = Math.max(data.payload.height, 360) + "px";
           }
           break;
         case "ready":
